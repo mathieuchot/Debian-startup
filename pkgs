@@ -19,3 +19,4 @@ pylint
 tcpdump 
 ntpdate
 curl
+zip
