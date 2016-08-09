@@ -21,3 +21,5 @@ ntpdate
 curl
 zip
 linux-headers-$(uname -r)
+unrar-free
+p7zip-full
