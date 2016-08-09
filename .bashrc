@@ -1,5 +1,5 @@
 
-SELECT="if [ \$? = 0 ]; then echo ':)'; else echo ':('; fi"
+SELECT="if [ \$? = 0 ]; then echo '\[\033[38;5;34m\]:)\[$(tput sgr0)\]'; else echo '\[\033[38;5;88m\]:(\[$(tput sgr0)\]'; fi"
 export PS1="\`${SELECT}\`\[\033[38;5;196m\]\u\[$(tput sgr0)\]\[\033[38;5;226m\]@\[$(tput sgr0)\]\[\033[38;5;81m\]\h\[$(tput sgr0)\]\[\033[38;5;83m\][\[$(tput sgr0)\]\[\033[38;5;202m\]\A\[$(tput sgr0)\]\[\033[38;5;82m\]]\[$(tput sgr0)\]\[\033[38;5;201m\]:\[$(tput sgr0)\]"
 export LS_OPTIONS='--color=auto'
 eval "`dircolors`"
