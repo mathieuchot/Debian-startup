@@ -16,3 +16,6 @@ open-vm-tools
 pyopenssl
 pep8
 pylint
+tcpdump 
+ntpdate
+curl
