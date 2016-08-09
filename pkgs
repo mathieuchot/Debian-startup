@@ -5,7 +5,6 @@ sudo
 logwatch
 build-essential
 screen
-cmake
 rsync
 htop
 strace
@@ -13,6 +12,7 @@ python-dev
 python-pip
 tree
 open-vm-tools
+open-vm-tools-desktop
 pyopenssl
 pep8
 pylint
@@ -20,3 +20,4 @@ tcpdump
 ntpdate
 curl
 zip
+linux-headers-$(uname -r)
