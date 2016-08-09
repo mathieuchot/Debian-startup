@@ -1,6 +1,6 @@
 
-SELECT="if [ \$? = 0 ]; then echo '\[\033[38;5;34m\]:)\[$(tput sgr0)\]'; else echo '\[\033[38;5;88m\]:(\[$(tput sgr0)\]'; fi"
-export PS1="\`${SELECT}\`\[\033[38;5;196m\]\u\[$(tput sgr0)\]\[\033[38;5;226m\]@\[$(tput sgr0)\]\[\033[38;5;81m\]\h\[$(tput sgr0)\]\[\033[38;5;83m\][\[$(tput sgr0)\]\[\033[38;5;202m\]\A\[$(tput sgr0)\]\[\033[38;5;82m\]]\[$(tput sgr0)\]\[\033[38;5;201m\]:\[$(tput sgr0)\]"
+EMOJI="if [ \$? = 0 ]; then echo '\[\033[38;5;34m\]:)\[$(tput sgr0)\]'; else echo '\[\033[38;5;88m\]:(\[$(tput sgr0)\]'; fi"
+export PS1="\`${EMOJI}\`\[\033[38;5;196m\]\u\[$(tput sgr0)\]\[\033[38;5;226m\]@\[$(tput sgr0)\]\[\033[38;5;81m\]\h\[$(tput sgr0)\]\[\033[38;5;83m\][\[$(tput sgr0)\]\[\033[38;5;202m\]\A\[$(tput sgr0)\]\[\033[38;5;82m\]]\[$(tput sgr0)\]\[\033[38;5;201m\]:\[$(tput sgr0)\]"
 export LS_OPTIONS='--color=auto'
 eval "`dircolors`"
 alias ls='ls $LS_OPTIONS'
@@ -14,6 +14,16 @@ alias rm='rm -i'
 alias vi='vim'
 alias grep='grep --color=auto'
 
+#man bash colored
+export LESS_TERMCAP_mb=$'\E[01;31m'
+export LESS_TERMCAP_md=$'\E[01;31m'
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_se=$'\E[0m'
+export LESS_TERMCAP_so=$'\E[01;44;33m'
+export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_us=$'\E[01;32m'
+
+#bash completion
 if ! shopt -oq posix; then
   if [ -f /usr/share/bash-completion/bash_completion ]; then
     . /usr/share/bash-completion/bash_completion
@@ -90,6 +100,7 @@ upvimrc(){
 }
 
 #http://stackoverflow.com/questions/188162/what-is-the-most-useful-script-youve-written-for-everyday-life
+#go up in the current path : up 2 == cd 2 folders above
 up(){
     if [ -z "$1" ]; then
     	echo "Usage: up (int)"
@@ -104,8 +115,8 @@ up(){
 		export MPWD=$P
 	fi
 }
-#
 
+#go back in the currentpath : back 1 == go back 1 folder before the go command
 back(){
 	LIMIT=$1
 	P=$MPWD
