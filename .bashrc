@@ -10,7 +10,7 @@ alias l='ls $LS_OPTIONS -lart'
 
 alias cp='cp -i'
 alias mv='mv -i'
-alias rm='rm -rvf'
+alias rm='rm -i'
 
 alias vi='vim'
 alias grep='grep --color=auto'
