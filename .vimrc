@@ -11,3 +11,4 @@ set ruler
 set showmatch
 set title
 set history=2000
+set mouse=a
