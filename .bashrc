@@ -71,7 +71,7 @@ ext () {
 }
 
 nmac(){
-  INTERFACE=ip route | grep default | cut -d " " -f 5
+  INTERFACE=$(ip route | grep default | cut -d " " -f 5)
   sudo ifdown $INTERFACE
   sudo macchanger -A $INTERFACE
   sudo ifup $INTERFACE
