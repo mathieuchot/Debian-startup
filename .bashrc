@@ -73,19 +73,47 @@ ext () {
 nmac(){
   INTERFACE=ip route | grep default | cut -d " " -f 5
   sudo ifdown $INTERFACE
-  macchanger -A $INTERFACE
+  sudo macchanger -A $INTERFACE
   sudo ifup $INTERFACE
   }
 }
 
 upbashrc(){
-			rm -rf ~/.bashrc
-			wget https://raw.githubusercontent.com/mathieuchot/Debian-startup/master/.bashrc  -O ~/.bashrc 
-			. ~/.bashrc
+	rm -rf ~/.bashrc
+	wget https://raw.githubusercontent.com/mathieuchot/Debian-startup/master/.bashrc  -O ~/.bashrc 
+	. ~/.bashrc
 }
 
 upvimrc(){
-  	 sudo rm -rf /etc/vim/vimrc
-  	 sudo wget https://github.com/mathieuchot/Debian-startup/blob/master/.vimrc -O /etc/vim/vimrc
-     sudo . /etc/vim/vimrc
+	sudo rm -rf /etc/vim/vimrc
+  	sudo wget https://github.com/mathieuchot/Debian-startup/blob/master/.vimrc -O /etc/vim/vimrc
+     	sudo . /etc/vim/vimrc
+}
+
+#http://stackoverflow.com/questions/188162/what-is-the-most-useful-script-youve-written-for-everyday-life
+up(){
+	if [ -z "$1" ]; then
+    	echo "Usage: up (int)"
+    else
+		LIMIT=$1
+		P=$PWD
+		for ((i=1; i <= LIMIT; i++))
+		do
+			P=$P/..
+		done
+		cd $P
+		export MPWD=$P
+	fi
+}
+#
+
+back(){
+	LIMIT=$1
+	P=$MPWD
+	for ((i=1; i <= LIMIT; i++))
+	do
+	    P=${P%/..}
+	done
+	cd $P
+	export MPWD=$P
 }
