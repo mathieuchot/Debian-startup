@@ -42,6 +42,9 @@ case "$TERM" in
 esac
 
 
+
+
+### functions ###
 ext () {
   if [ -z "$1" ]; then
     echo "Usage: ext archive_to_extract"
@@ -73,4 +76,16 @@ nmac(){
   macchanger -A $INTERFACE
   sudo ifup $INTERFACE
   }
+}
+
+upbashrc(){
+			rm -rf ~/.bashrc
+			wget https://raw.githubusercontent.com/mathieuchot/Debian-startup/master/.bashrc  -O ~/.bashrc 
+			. ~/.bashrc
+}
+
+upvimrc(){
+  	 sudo rm -rf /etc/vim/vimrc
+  	 sudo wget https://github.com/mathieuchot/Debian-startup/blob/master/.vimrc -O /etc/vim/vimrc
+     sudo . /etc/vim/vimrc
 }
