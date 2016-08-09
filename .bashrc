@@ -92,7 +92,7 @@ upvimrc(){
 
 #http://stackoverflow.com/questions/188162/what-is-the-most-useful-script-youve-written-for-everyday-life
 up(){
-	if [ -z "$1" ]; then
+    if [ -z "$1" ]; then
     	echo "Usage: up (int)"
     else
 		LIMIT=$1
