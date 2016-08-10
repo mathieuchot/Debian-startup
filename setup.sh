@@ -7,6 +7,7 @@ CHECK_INTERNET = $(wget --spider -nv -S $HOST 2>&1 | grep -m 1 'HTTP/' | cut -d"
 GREEN="$(tput setaf 2)"
 MAGENTA="$(tput setaf 5)"
 RED="$(tput setaf 3)"
+BLUE="$(tput setaf 4)"
 END="$(tput setaf 9)"
 echo "${GREEN}-----------------------------------${END}"
 echo "${MAGENTA}    ___      __   _           ${END}"
@@ -36,7 +37,7 @@ case $CHECK_INTERNET in
             exit 1 ;;
 esac
 
-echo -e "${MAGENTA}[1/5]${GREEN} Replacing Default files  \n ${END}" 1>&2
+echo -e "${BLUE}[1/5]${GREEN} Replacing Default files  \n ${END}" 1>&2
 
 declare -A getfiles=(["bashrc"]="wget -q https://raw.githubusercontent.com/mathieuchot/Debian-startup/master/.bashrc -O ~/.bashrc" ["vimrc"]="wget -q https://raw.githubusercontent.com/mathieuchot/Debian-startup/master/.vimrc -O ./etc/vim/vimrc" ["sourceslist"]="wget -q https://raw.githubusercontent.com/mathieuchot/Debian-startup/master/sources.list -O /etc/apt/sources.list")
 for key in ${!getfiles[@]}; do
@@ -48,7 +49,7 @@ for key in ${!getfiles[@]}; do
         echo -e "${MAGENTA}[DOWNLOAD]${GREEN} The file $key has been correctly replaced ${END} \n" 1>&2
     fi
 done
-echo -e "${MAGENTA}[2/5]${GREEN} Replacing Default files  \n ${END}" 1>&2
+echo -e "${BLUE}[2/5]${GREEN} Replacing Default files  \n ${END}" 1>&2
 
 read -p " ${GREEN}Do you want to upgrade the system to the latest version (y/n)?${END}" choice
 case "$choice" in 
