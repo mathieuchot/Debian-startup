@@ -50,16 +50,17 @@ DefaultFiles(){
        fi
    done
    source ~/.bashrc
-   read -p " ${GREEN}Do you want to upgrade the system to the latest version (y/n)?${END}" choice
+   read -p " ${GREEN} Which Distribution list do you want to use for your sources.list (testing | stable(default) | unstable)?${END}" choice
    case "$choice" in 
-     y|Y )  echo -e "${MAGENTA}[UPGRADE]${GREEN} system is upgrading... ${END} \n" 1>&2
-            apt-get update -y && apt-get Dist-upgrade -y
-            if [ $? -ne 0 ]; then
-               echo -e "${MAGENTA}[UPGRADE]${RED} An error has been encountered. Error code: $? ${END} \n" 1>&2
-            fi
+     testing ) 
+            
+            
             ;;
-     n|N )  apt-get update -y ;;
-     * ) echo -e "${MAGENTA}[UPGRADE]${RED}\n invalid${END}";;
+     unstable ) 
+            
+            ;;
+     
+     * ) ;;
    esac
 
 }
