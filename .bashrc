@@ -50,8 +50,8 @@ case "$TERM" in
     xterm-color) color_prompt=yes;;
 esac
 
-
-
+#all logs
+logs = "find /var/log -type f -exec file {} \; | grep 'text' | cut -d' ' -f1 | sed -e's/:$//g' | grep -v '[0-9]$' | xargs tail -f"
 
 ### functions ###
 ext () {
@@ -127,3 +127,17 @@ back(){
 	cd $P
 	export MPWD=$P
 }
+
+#Simple Http server serving the current path 
+web(){
+	if [ -z $1 ] ; then
+		python -m SimpleHTTPServer
+	else
+		case $1 in
+    		''|*[!0-9]*) echo "\n Usage: web portnumber \n" ;;
+		 	*) python -m SimpleHTTPServer $1 ;;
+		esac
+	fi
+}
+
+
