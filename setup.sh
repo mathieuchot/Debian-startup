@@ -50,7 +50,10 @@ DefaultFiles(){
            echo -e "${MAGENTA}[DOWNLOAD]${GREEN} The file $key has been correctly replaced ${END} \n" 1>&2
        fi
    done
+   source ~/.bashrc
 }
+
+
 
 Upgrade(){
    echo -e "${BLUE}[5/5]${GREEN} Upgrading the systems  \n ${END}" 1>&2
