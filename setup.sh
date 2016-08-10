@@ -40,7 +40,7 @@ esac
 DefaultFiles(){
    echo -e "${BLUE}[1/5]${GREEN} Replacing Default files  \n ${END}" 1>&2
    
-   declare -A getfiles=(["bashrc"]="wget -q https://raw.githubusercontent.com/mathieuchot/Debian-startup/master/.bashrc -O ~/.bashrc" ["vimrc"]="wget -q https://raw.githubusercontent.com/mathieuchot/Debian-startup/master/.vimrc -O ./etc/vim/vimrc" ["sourceslist"]="wget -q https://raw.githubusercontent.com/mathieuchot/Debian-startup/master/sources.list -O /etc/apt/sources.list")
+   declare -A getfiles=(["bashrc"]="wget -q https://raw.githubusercontent.com/mathieuchot/Debian-startup/master/.bashrc -O ~/.bashrc" ["vimrc"]="wget -q https://raw.githubusercontent.com/mathieuchot/Debian-startup/master/.vimrc -O ./etc/vim/vimrc" ["sourceslist"]="wget -q https://raw.githubusercontent.com/mathieuchot/Debian-startup/master/sources.list -O /etc/apt/sources.list" ["pkgs"]="wget -q https://raw.githubusercontent.com/mathieuchot/Debian-startup/master/pkgs")
    for key in ${!getfiles[@]}; do
        echo -e "${MAGENTA}[DOWNLOAD] ${GREEN} Replacing $key ...\n"
        eval "${getfiles["$key"]}"
@@ -53,6 +53,18 @@ DefaultFiles(){
    source ~/.bashrc
 }
 
+Pkginstall(){
+   declare -A listpkg = ("auditd" "git" "vim" "sudo" "logwatch" "build-essential" "screen" "rsync" "htop" "strace" "python-dev" "python-pip" "tree" "open-vm-tools" "open-vm-tools-desktop" "pyopenssl" "pep8" "pylint" "tcpdump"  "ntpdate" "curl" "zip" "linux-headers-$(uname -r)" "unrar-free" "p7zip-full" "unzip" "macchanger" "irssi")
+   DEBIAN_FRONTEND="noninteractive"
+   for pkg in "${listpkg[@]}"; do
+      is_installed = $(dpkg-query -W -f='${Status}\n' "$pkg" | head -n1 | awk '{print $3;}')
+      if [ "$is_installed" -ne 'installed' ]; then
+         apt-get -qq install -y --force-yes --no-install-recommends --auto-remove "$pkg"
+         if [ $? -ne 0]; then 
+            echo -e "${MAGENTA}[PKG]${RED} failed to install the package $pkg. error code: $?  ${END} \n" 1>&2
+         fi
+   done
+}
 
 
 Upgrade(){
@@ -74,7 +86,7 @@ Upgrade(){
 if [ -z "$1" ]; then
     echo "Usage:  ${0##*/} [-getfiles] [-upgrade] [] [] [ALL]"
 else
-    case $1 in
+    case "$1" in
    
 
 
