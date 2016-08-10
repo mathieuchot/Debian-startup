@@ -1,7 +1,7 @@
 #!/bin/bash
 
-HOST = 'https://github.com'
-CHECK_INTERNET = $(wget --spider -nv -S $HOST 2>&1 | grep -m 1 'HTTP/' | cut -d" " -f4)
+HOST='https://github.com'
+CHECK_INTERNET=$(wget --spider -nv -S $HOST 2>&1 | grep -m 1 'HTTP/' | cut -d" " -f4)
 
 GREEN="$(tput setaf 2)"
 MAGENTA="$(tput setaf 5)"
@@ -39,7 +39,7 @@ esac
 DefaultFiles(){
    echo -e "${BLUE}[1/5]${GREEN} Replacing Default files  \n ${END}" 1>&2
    
-   declare -A getfiles=(["bashrc"]="wget -q https://raw.githubusercontent.com/mathieuchot/Debian-startup/master/.bashrc -O ~/.bashrc" ["vimrc"]="wget -q https://raw.githubusercontent.com/mathieuchot/Debian-startup/master/.vimrc -O ./etc/vim/vimrc" ["sourceslist"]="wget -q https://raw.githubusercontent.com/mathieuchot/Debian-startup/master/sources.list -O /etc/apt/sources.list" ["pkgs"]="wget -q https://raw.githubusercontent.com/mathieuchot/Debian-startup/master/pkgs")
+   declare -A getfiles=(["bashrc"]="wget -q https://raw.githubusercontent.com/mathieuchot/Debian-startup/master/.bashrc -O ~/.bashrc" ["vimrc"]="wget -q https://raw.githubusercontent.com/mathieuchot/Debian-startup/master/.vimrc -O ./etc/vim/vimrc")
    for key in ${!getfiles[@]}; do
        echo -e "${MAGENTA}[DOWNLOAD] ${GREEN} Replacing $key ...\n"
        eval "${getfiles["$key"]}"
@@ -50,6 +50,18 @@ DefaultFiles(){
        fi
    done
    source ~/.bashrc
+   read -p " ${GREEN}Do you want to upgrade the system to the latest version (y/n)?${END}" choice
+   case "$choice" in 
+     y|Y )  echo -e "${MAGENTA}[UPGRADE]${GREEN} system is upgrading... ${END} \n" 1>&2
+            apt-get update -y && apt-get Dist-upgrade -y
+            if [ $? -ne 0 ]; then
+               echo -e "${MAGENTA}[UPGRADE]${RED} An error has been encountered. Error code: $? ${END} \n" 1>&2
+            fi
+            ;;
+     n|N )  apt-get update -y ;;
+     * ) echo -e "${MAGENTA}[UPGRADE]${RED}\n invalid${END}";;
+   esac
+
 }
 
 Pkginstall(){
@@ -74,7 +86,7 @@ Upgrade(){
    read -p " ${GREEN}Do you want to upgrade the system to the latest version (y/n)?${END}" choice
    case "$choice" in 
      y|Y )  echo -e "${MAGENTA}[UPGRADE]${GREEN} system is upgrading... ${END} \n" 1>&2
-            apt-get update -y && apt-get upgrade -y
+            apt-get update -y && apt-get Dist-upgrade -y
             if [ $? -ne 0 ]; then
                echo -e "${MAGENTA}[UPGRADE]${RED} An error has been encountered. Error code: $? ${END} \n" 1>&2
             fi
