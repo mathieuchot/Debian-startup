@@ -37,33 +37,41 @@ case $CHECK_INTERNET in
             exit 1 ;;
 esac
 
-echo -e "${BLUE}[1/5]${GREEN} Replacing Default files  \n ${END}" 1>&2
+DefaultFiles(){
+   echo -e "${BLUE}[1/5]${GREEN} Replacing Default files  \n ${END}" 1>&2
+   
+   declare -A getfiles=(["bashrc"]="wget -q https://raw.githubusercontent.com/mathieuchot/Debian-startup/master/.bashrc -O ~/.bashrc" ["vimrc"]="wget -q https://raw.githubusercontent.com/mathieuchot/Debian-startup/master/.vimrc -O ./etc/vim/vimrc" ["sourceslist"]="wget -q https://raw.githubusercontent.com/mathieuchot/Debian-startup/master/sources.list -O /etc/apt/sources.list")
+   for key in ${!getfiles[@]}; do
+       echo -e "${MAGENTA}[DOWNLOAD] ${GREEN} Replacing $key ...\n"
+       eval "${getfiles["$key"]}"
+       if [ $? -ne 0 ]; then
+           echo -e "${MAGENTA}[DOWNLOAD]${RED} failed to replace the file $key. error code: $?  ${END} \n" 1>&2
+       else
+           echo -e "${MAGENTA}[DOWNLOAD]${GREEN} The file $key has been correctly replaced ${END} \n" 1>&2
+       fi
+   done
+}
 
-declare -A getfiles=(["bashrc"]="wget -q https://raw.githubusercontent.com/mathieuchot/Debian-startup/master/.bashrc -O ~/.bashrc" ["vimrc"]="wget -q https://raw.githubusercontent.com/mathieuchot/Debian-startup/master/.vimrc -O ./etc/vim/vimrc" ["sourceslist"]="wget -q https://raw.githubusercontent.com/mathieuchot/Debian-startup/master/sources.list -O /etc/apt/sources.list")
-for key in ${!getfiles[@]}; do
-    echo -e "${MAGENTA}[DOWNLOAD] ${GREEN} Replacing $key ...\n"
-    eval "${getfiles["$key"]}"
-    if [ $? -ne 0 ]; then
-        echo -e "${MAGENTA}[DOWNLOAD]${RED} failed to replace the file $key. error code: $?  ${END} \n" 1>&2
-    else
-        echo -e "${MAGENTA}[DOWNLOAD]${GREEN} The file $key has been correctly replaced ${END} \n" 1>&2
-    fi
-done
-echo -e "${BLUE}[2/5]${GREEN} Replacing Default files  \n ${END}" 1>&2
+Upgrade(){
+   echo -e "${BLUE}[5/5]${GREEN} Upgrading the systems  \n ${END}" 1>&2
+   
+   read -p " ${GREEN}Do you want to upgrade the system to the latest version (y/n)?${END}" choice
+   case "$choice" in 
+     y|Y )  echo -e "${MAGENTA}[UPGRADE]${GREEN} system is upgrading... ${END} \n" 1>&2
+            apt-get update -y && apt-get upgrade -y
+            if [ $? -ne 0 ]; then
+               echo -e "${MAGENTA}[UPGRADE]${RED} An error has been encountered. Error code: $? ${END} \n" 1>&2
+            fi
+            ;;
+     n|N )  apt-get update -y ;;
+     * ) echo -e "${MAGENTA}[UPGRADE]${RED}\n invalid${END}";;
+   esac
+}
 
-read -p " ${GREEN}Do you want to upgrade the system to the latest version (y/n)?${END}" choice
-case "$choice" in 
-  y|Y )  echo -e "${MAGENTA}[UPGRADE]${GREEN} system is upgrading... ${END} \n" 1>&2
-         apt-get update -y && apt-get upgrade -y
-         if [ $? -ne 0 ]; then
-            echo -e "${MAGENTA}[UPGRADE]${RED} An error has been encountered. Error code: $? ${END} \n" 1>&2
-         fi
-         ;;
-  n|N )  apt-get update -y ;;
-  * ) echo -e "${MAGENTA}[UPGRADE]${RED}\n invalid${END}";;
-esac
-
-
-
+if [ -z "$1" ]; then
+    echo "Usage:  ${0##*/} [-getfiles] [-upgrade] [] [] [ALL]"
+else
+    case $1 in
+   
 
 
