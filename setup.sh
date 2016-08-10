@@ -54,6 +54,8 @@ DefaultFiles(){
 }
 
 Pkginstall(){
+   echo -e "${BLUE}[2/5]${GREEN} Installing needed packages...  \n ${END}" 1>&2
+   
    declare -A listpkg = ("auditd" "git" "vim" "sudo" "logwatch" "build-essential" "screen" "rsync" "htop" "strace" "python-dev" "python-pip" "tree" "open-vm-tools" "open-vm-tools-desktop" "pyopenssl" "pep8" "pylint" "tcpdump"  "ntpdate" "curl" "zip" "linux-headers-$(uname -r)" "unrar-free" "p7zip-full" "unzip" "macchanger" "irssi")
    DEBIAN_FRONTEND="noninteractive"
    for pkg in "${listpkg[@]}"; do
