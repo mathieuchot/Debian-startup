@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# get the return code 
 HOST = 'https://github.com'
 CHECK_INTERNET = $(wget --spider -nv -S $HOST 2>&1 | grep -m 1 'HTTP/' | cut -d" " -f4)
 
