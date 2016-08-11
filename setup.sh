@@ -83,6 +83,7 @@ Pkginstall(){
    
    declare -a listpkg=("auditd" "git" "vim" "sudo" "logwatch" "build-essential" "screen" "rsync" "htop" "strace" "python-dev" "python-pip" "tree" "open-vm-tools" "open-vm-tools-desktop" "pyopenssl" "pep8" "pylint" "tcpdump"  "ntpdate" "curl" "zip" "linux-headers-$(uname -r)" "unrar-free" "p7zip-full" "unzip" "macchanger" "irssi")
    DEBIAN_FRONTEND="noninteractive"
+   apt-get update -y
    for pkg in "${listpkg[@]}"; do
       is_installed=$(dpkg-query -W -f='${Status}\n' "$pkg" | head -n1 | awk '{print $3;}')
       if [ "$is_installed" != 'installed' ]; then
