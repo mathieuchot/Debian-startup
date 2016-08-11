@@ -85,7 +85,7 @@ Pkginstall(){
    DEBIAN_FRONTEND="noninteractive"
    for pkg in "${listpkg[@]}"; do
       is_installed=$(dpkg-query -W -f='${Status}\n' "$pkg" | head -n1 | awk '{print $3;}')
-      if [ "$is_installed" -ne 'installed' ]; then
+      if [ "$is_installed" != 'installed' ]; then
          apt-get -qq install -y --force-yes --no-install-recommends --auto-remove "$pkg"
          if [ $? -ne 0]; then 
             echo -e "${MAGENTA}[PKG]${RED} failed to install the package $pkg. error code: $?  ${END} \n" 1>&2
