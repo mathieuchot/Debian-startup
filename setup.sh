@@ -65,7 +65,8 @@ DefaultFiles(){
        fi
    done
    source ~/.bashrc
-   read -p " ${GREEN} Which Distribution list do you want to use for your sources.list: \n ct(contrib) | stable(default) | nf(non-free ) | cnf(contrib non-free): ${END}" choice
+    echo -e "${GREEN} Which Distribution list do you want to use for your sources.list ${END}: \n"
+   read -p " ${GREEN} ct(contrib) | stable(default) | nf(non-free ) | cnf(contrib non-free): ${END}" choice
    case "$choice" in 
      cn ) echo -e "${GREEN} The testing distribution  will be used${END} \n" 1>&2
             Sourcelists "contrib"  ;;
