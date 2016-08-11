@@ -84,7 +84,6 @@ nmac(){
   sudo ifdown $INTERFACE
   sudo macchanger -A $INTERFACE
   sudo ifup $INTERFACE
-  }
 }
 
 upbashrc(){
@@ -122,7 +121,7 @@ back(){
 	P=$MPWD
 	for ((i=1; i <= LIMIT; i++))
 	do
-	    P=${P%/..}
+		P=${P%/..}
 	done
 	cd $P
 	export MPWD=$P
