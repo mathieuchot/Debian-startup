@@ -88,11 +88,12 @@ Pkginstall(){
       is_installed=$(dpkg-query -W -f='${Status}\n' "$pkg" | head -n1 | awk '{print $3;}')
       if [ "$is_installed" != 'installed' ]; then
          apt-get -qq install -y --force-yes --no-install-recommends --auto-remove "$pkg"
+         if [ $? -ne 0 ]; then 
+            echo -e "${MAGENTA}[PKG]${RED} failed to install the package $pkg. error code: $?  ${END} \n" 1>&2
+         else
+            echo -e "${MAGENTA}[PKG]${GREEN} $pkg is now installed ! ${END} \n" 1>&2
+         fi
       fi
-      if [ $? -ne 0]; then 
-         echo -e "${MAGENTA}[PKG]${RED} failed to install the package $pkg. error code: $?  ${END} \n" 1>&2
-      fi
-
    done
 }
 
