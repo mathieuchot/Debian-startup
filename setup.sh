@@ -37,19 +37,17 @@ case $CHECK_INTERNET in
 esac
 
 Sourcelists(){
-   if [ -z "$1" ]; then
-      $1=""
-   fi
-   cat  < 
-   deb http://httpredir.debian.org/debian jessie main $1
-   deb-src http://httpredir.debian.org/debian jessie main $1
-   
-   deb http://httpredir.debian.org/debian jessie-updates main $1
-   deb-src http://httpredir.debian.org/debian jessie-updates main $1
-   
-   deb http://security.debian.org/ jessie/updates main $1
-   deb-src http://security.debian.org/ jessie/updates main $1
-   > /etc/apt/sources.list
+   option=${1-""}
+   cat <<EOF > /etc/apt/sources.list
+deb http://httpredir.debian.org/debian jessie main $option
+deb-src http://httpredir.debian.org/debian jessie main $option
+
+deb http://httpredir.debian.org/debian jessie-updates main $option
+deb-src http://httpredir.debian.org/debian jessie-updates main $option
+
+deb http://security.debian.org/ jessie/updates main $option
+deb-src http://security.debian.org/ jessie/updates main $option
+EOF
 }
 
 DefaultFiles(){
@@ -69,13 +67,13 @@ DefaultFiles(){
    read -p " ${GREEN} Which Distribution list do you want to use for your sources.list: \n ct(contrib) | stable(default) | nf(non-free ) | cnf(contrib non-free): ${END}" choice
    case "$choice" in 
      cn ) echo -e "${GREEN} The testing distribution  will be used${END} \n" 1>&2
-            Sourcelists("contrib") ;;
+            Sourcelists "contrib"  ;;
      nf ) echo -e "${GREEN} The unstable distribution will be used${END} \n" 1>&2
-            Sourcelists("non-free") ;;
+            Sourcelists "non-free" ;;
      cnf) echo -e "${GREEN} The testing & unstable distribution will be used${END} \n" 1>&2
-            Sourcelists("contrib non-free") ;;
+            Sourcelists "contrib non-free" ;;
      * ) echo -e "${GREEN} The stable distribution will be used${END} \n" 1>&2 
-            Sourcelists();;
+            Sourcelists;;
    esac
 
 }
@@ -83,10 +81,10 @@ DefaultFiles(){
 Pkginstall(){
    echo -e "${BLUE}[2/5]${GREEN} Installing needed packages...  \n ${END}" 1>&2
    
-   declare -A listpkg = ("auditd" "git" "vim" "sudo" "logwatch" "build-essential" "screen" "rsync" "htop" "strace" "python-dev" "python-pip" "tree" "open-vm-tools" "open-vm-tools-desktop" "pyopenssl" "pep8" "pylint" "tcpdump"  "ntpdate" "curl" "zip" "linux-headers-$(uname -r)" "unrar-free" "p7zip-full" "unzip" "macchanger" "irssi")
+   declare -A listpkg=("auditd" "git" "vim" "sudo" "logwatch" "build-essential" "screen" "rsync" "htop" "strace" "python-dev" "python-pip" "tree" "open-vm-tools" "open-vm-tools-desktop" "pyopenssl" "pep8" "pylint" "tcpdump"  "ntpdate" "curl" "zip" "linux-headers-$(uname -r)" "unrar-free" "p7zip-full" "unzip" "macchanger" "irssi")
    DEBIAN_FRONTEND="noninteractive"
    for pkg in "${listpkg[@]}"; do
-      is_installed = $(dpkg-query -W -f='${Status}\n' "$pkg" | head -n1 | awk '{print $3;}')
+      is_installed=$(dpkg-query -W -f='${Status}\n' "$pkg" | head -n1 | awk '{print $3;}')
       if [ "$is_installed" -ne 'installed' ]; then
          apt-get -qq install -y --force-yes --no-install-recommends --auto-remove "$pkg"
          if [ $? -ne 0]; then 
@@ -116,9 +114,9 @@ if [ -z "$1" ]; then
     echo "Usage:  ${0##*/} [-getfiles] [-upgrade] [-pkginstall] [] [ALL]"
 else
    case "$1" in
-      -pkginstall) Pkginstall();;
-      -getfiles) DefaultFiles();;
-      -upgrade) Upgrade();;
+      -pkginstall) Pkginstall;;
+      -getfiles) DefaultFiles;;
+      -upgrade) Upgrade;;
       -ALL) echo 'a';;
    esac
 fi
