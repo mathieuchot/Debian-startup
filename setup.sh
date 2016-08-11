@@ -36,6 +36,22 @@ case $CHECK_INTERNET in
             exit 1 ;;
 esac
 
+Sourcelists(){
+   if [ -z "$1" ]; then
+      $1=""
+   fi
+   cat  < 
+   deb http://httpredir.debian.org/debian jessie main $1
+   deb-src http://httpredir.debian.org/debian jessie main $1
+   
+   deb http://httpredir.debian.org/debian jessie-updates main $1
+   deb-src http://httpredir.debian.org/debian jessie-updates main $1
+   
+   deb http://security.debian.org/ jessie/updates main $1
+   deb-src http://security.debian.org/ jessie/updates main $1
+   > /etc/apt/sources.list
+}
+
 DefaultFiles(){
    echo -e "${BLUE}[1/5]${GREEN} Replacing Default files  \n ${END}" 1>&2
    
@@ -50,17 +66,16 @@ DefaultFiles(){
        fi
    done
    source ~/.bashrc
-   read -p " ${GREEN} Which Distribution list do you want to use for your sources.list (testing | stable(default) | unstable)?${END}" choice
+   read -p " ${GREEN} Which Distribution list do you want to use for your sources.list: \n ct(contrib) | stable(default) | nf(non-free ) | cnf(contrib non-free): ${END}" choice
    case "$choice" in 
-     testing ) 
-            
-            
-            ;;
-     unstable ) 
-            
-            ;;
-     
-     * ) ;;
+     cn ) echo -e "${GREEN} The testing distribution  will be used${END} \n" 1>&2
+            Sourcelists("contrib") ;;
+     nf ) echo -e "${GREEN} The unstable distribution will be used${END} \n" 1>&2
+            Sourcelists("non-free") ;;
+     cnf) echo -e "${GREEN} The testing & unstable distribution will be used${END} \n" 1>&2
+            Sourcelists("contrib non-free") ;;
+     * ) echo -e "${GREEN} The stable distribution will be used${END} \n" 1>&2 
+            Sourcelists();;
    esac
 
 }
@@ -98,9 +113,13 @@ Upgrade(){
 }
 
 if [ -z "$1" ]; then
-    echo "Usage:  ${0##*/} [-getfiles] [-upgrade] [] [] [ALL]"
+    echo "Usage:  ${0##*/} [-getfiles] [-upgrade] [-pkginstall] [] [ALL]"
 else
-    case "$1" in
-   
-
+   case "$1" in
+      -pkginstall) Pkginstall();;
+      -getfiles) DefaultFiles();;
+      -upgrade) Upgrade();;
+      -ALL) echo 'a';;
+   esac
+fi
 
