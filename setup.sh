@@ -54,7 +54,7 @@ EOF
 DefaultFiles(){
    echo -e "${BLUE}[1/5]${GREEN} Replacing Default files  \n ${END}" 1>&2
    
-   declare -A getfiles=(["bashrc"]="wget -q https://raw.githubusercontent.com/mathieuchot/Debian-startup/master/.bashrc -O ~/.bashrc" ["vimrc"]="wget -q https://raw.githubusercontent.com/mathieuchot/Debian-startup/master/.vimrc -O ./etc/vim/vimrc")
+   declare -A getfiles=(["bashrc"]="wget -q https://raw.githubusercontent.com/mathieuchot/Debian-startup/master/.bashrc -O ~/.bashrc" ["vimrc"]="wget -q https://raw.githubusercontent.com/mathieuchot/Debian-startup/master/.vimrc -O /etc/vim/vimrc")
    for key in ${!getfiles[@]}; do
        echo -e "${MAGENTA}[DOWNLOAD] ${GREEN} Replacing $key ...\n"
        eval "${getfiles["$key"]}"
