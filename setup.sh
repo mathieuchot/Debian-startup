@@ -90,6 +90,7 @@ Pkginstall(){
          if [ $? -ne 0]; then 
             echo -e "${MAGENTA}[PKG]${RED} failed to install the package $pkg. error code: $?  ${END} \n" 1>&2
          fi
+      fi
    done
 }
 
