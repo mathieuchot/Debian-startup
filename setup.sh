@@ -49,6 +49,7 @@ deb-src http://httpredir.debian.org/debian jessie-updates main $option
 deb http://security.debian.org/ jessie/updates main $option
 deb-src http://security.debian.org/ jessie/updates main $option
 EOF
+   apt-get update -y
 }
 
 DefaultFiles(){
