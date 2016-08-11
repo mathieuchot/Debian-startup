@@ -37,6 +37,7 @@ case $CHECK_INTERNET in
 esac
 
 Sourcelists(){
+   #if arg 1 is not defined arg = ""
    option=${1-""}
    cat <<EOF > /etc/apt/sources.list
 deb http://httpredir.debian.org/debian jessie main $option
@@ -104,7 +105,7 @@ Upgrade(){
    read -p " ${GREEN}Do you want to upgrade the system to the latest version (y/n)?${END}" choice
    case "$choice" in 
      y|Y )  echo -e "${MAGENTA}[UPGRADE]${GREEN} system is upgrading... ${END} \n" 1>&2
-            apt-get update -y && apt-get Dist-upgrade -y
+            apt-get update -y && apt-get -y dist-upgrade
             if [ $? -ne 0 ]; then
                echo -e "${MAGENTA}[UPGRADE]${RED} An error has been encountered. Error code: $? ${END} \n" 1>&2
             fi
