@@ -91,7 +91,6 @@ DefaultFiles(){
      perso) wget -q $fw_perso -O /etc/init.d/firewall.sh ;;
      server) wget -q $fw_server -O /etc/init.d/firewall.sh ;;
      router) wget -q $fw_router -O /etc/init.d/firewall.sh ;;
-     none) ;;
      * ) echo "${RED} Please choose one of the following options${GREEN} vps | perso | server | router | none: ${END}" ;;
    esac
    if [[ $? -ne 0 ]]; then
