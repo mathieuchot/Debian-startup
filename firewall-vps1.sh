@@ -14,6 +14,7 @@ set -e
 
 # Init
 INTERNET=$(ip route | grep default | cut -d " " -f 5)
+# /usr/local/bin/oc-metadata | grep VOLUMES_0_EXPORT_URI | awk -F "/|:" '{print $4}'
 REMOTEHD=$(/usr/local/bin/oc-metadata | grep VOLUMES_0_EXPORT_URI | cut -d ":" -f "2" | cut -d "/" -f "3")
 
 echo $REMOTEHD
