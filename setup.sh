@@ -52,6 +52,7 @@ EOF
    apt-get update -y
 }
 
+
 DefaultFiles(){
    echo -e "${BLUE}[1/5]${GREEN} Replacing Default files  \n ${END}" 1>&2
    
@@ -79,7 +80,38 @@ DefaultFiles(){
      * ) echo -e "${GREEN} The stable distribution will be used${END} \n" 1>&2 
             Sourcelists;;
    esac
-
+   fw_scaleway="https://raw.githubusercontent.com/mathieuchot/Debian-startup/master/firewall-vps1.sh"
+   fw_perso=""
+   fw_server=""
+   fw_router=""
+   echo -e "${GREEN} Which firewall script do you want to use for this system ?${END} \n" 1>&2
+   read -p " ${GREEN} vps | perso | server | router | none: ${END}" choice
+   case "$choice" in 
+     vps) wget -q $fw_scaleway -O /etc/init.d/firewall.sh ;;
+     perso) wget -q $fw_perso -O /etc/init.d/firewall.sh ;;
+     server) wget -q $fw_server -O /etc/init.d/firewall.sh ;;
+     router) wget -q $fw_router -O /etc/init.d/firewall.sh ;;
+     none) ;;
+     * ) echo "${RED} Please choose one of the following options${GREEN} vps | perso | server | router | none: ${END}" ;;
+   esac
+   if [[ $? -ne 0 ]]; then
+      chmod +x /etc/init.d/firewall.sh 
+      update-rc.d firewall.sh defaults
+      if [[ $? -ne 0 ]]; then
+         read -p " ${GREEN} Do you want to start the firewall now ? ${END}" choice
+            case "$choice" in 
+               Y|y) echo -e " ${GREEN}Starting the firewall...${END}" 
+                    /etc/init.d/firewall.sh start ;;
+               N|n) echo -e " ${GREEN}OK the firewall will start at the next reboot${END}";;
+               *) echo -e " ${GREEN}Starting the firewall !${END}"
+                  /etc/init.d/firewall.sh start ;; 
+            esac
+      else
+         echo -e " ${RED} Couldn't make the script run at boot time.${END}"
+      fi
+   else
+      echo -e " ${RED} An error has been encountered while downloading the firewall script.${END}"
+   fi
 }
 
 Pkginstall(){
