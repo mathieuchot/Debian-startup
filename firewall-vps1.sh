@@ -6,7 +6,7 @@
 # Required-Stop:		$remote_fs $syslog
 # Default-Start: 		2 3 4 5
 # Default-Stop:
-# Short-Description:		VPS BASIC FIREWALL RULES
+# Short-Description:		SCALEWAY VPS BASIC FIREWALL RULES
 ### END INIT INFO
 
 # exit if error code !=0 
@@ -32,7 +32,7 @@ enable_iptable() {
 	iptables -A INPUT -i $INTERNET -p tcp -m multiport --dports 80,22,443,43900,8000 -j ACCEPT
 	iptables -A INPUT -m conntrack --ctstate NEW,RELATED,ESTABLISHED -j ACCEPT
 	iptables -A INPUT -i $INTERNET -p icmp --icmp-type echo-reply -j ACCEPT
-	
+	#DROP after because there's no auto reco to the disk if we drop before allowing REMOTEHD
 	iptables -P INPUT DROP
 	#---------------OUTPUT--------------#
 	iptables -A OUTPUT -p tcp ! --sport ssh -j LOG --log-prefix "OUTPUT" 
