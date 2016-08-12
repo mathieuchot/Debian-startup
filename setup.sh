@@ -85,13 +85,13 @@ DefaultFiles(){
    fw_server=""
    fw_router=""
    echo -e "${GREEN} Which firewall script do you want to use for this system ?${END} \n" 1>&2
-   read -p " ${GREEN} vps | perso | server | router | none: ${END}" choice
+   read -p " ${GREEN} vps | perso | server | router : ${END}" choice
    case "$choice" in 
      vps) wget -q $fw_scaleway -O /etc/init.d/firewall.sh ;;
      perso) wget -q $fw_perso -O /etc/init.d/firewall.sh ;;
      server) wget -q $fw_server -O /etc/init.d/firewall.sh ;;
      router) wget -q $fw_router -O /etc/init.d/firewall.sh ;;
-     * ) echo "${RED} Please choose one of the following options${GREEN} vps | perso | server | router | none: ${END}" ;;
+     * ) echo "${RED} Please choose one of the following options${GREEN} vps | perso | server | router : ${END}" ;;
    esac
    if [[ $? -ne 0 ]]; then
       chmod +x /etc/init.d/firewall.sh 
