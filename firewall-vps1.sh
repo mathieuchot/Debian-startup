@@ -30,7 +30,7 @@ enable_iptable() {
 	iptables -A INPUT -i $INTERNET -s $REMOTEHD -j ACCEPT
 	
 	iptables -A INPUT -i $INTERNET -p udp --dport 53 -j ACCEPT
-	iptables -A INPUT -i $INTERNET -p tcp -m multiport --dports 80,22,443,43900,8000 -j ACCEPT
+	iptables -A INPUT -i $INTERNET -p tcp -m multiport --dports 80,22,443,43900,8000,2368 -j ACCEPT
 	iptables -A INPUT -m conntrack --ctstate NEW,RELATED,ESTABLISHED -j ACCEPT
 	iptables -A INPUT -i $INTERNET -p icmp --icmp-type echo-reply -j ACCEPT
 	#DROP after because there's no auto reco to the disk if we drop before allowing REMOTEHD
