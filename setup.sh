@@ -85,7 +85,7 @@ DefaultFiles(){
 Pkginstall(){
    echo -e "${BLUE}[2/5]${GREEN} Installing needed packages...  \n ${END}" 1>&2
    #"auditd" 
-   declare -a listpkg=("git" "vim" "sudo" "logwatch" "build-essential" "screen" "rsync" "htop" "strace" "python-dev" "python-pip" "tree" "open-vm-tools" "open-vm-tools-desktop" "pep8" "pylint" "tcpdump"  "ntpdate" "curl" "zip" "linux-headers-$(uname -r)" "unrar-free" "p7zip-full" "unzip" "macchanger" "irssi" "fonts-inconsolata")
+   declare -a listpkg=("git" "vim" "sudo" "logwatch" "build-essential" "screen" "rsync" "htop" "strace" "python-dev" "python-pip" "tree" "open-vm-tools" "open-vm-tools-desktop" "pep8" "pylint" "tcpdump"  "ntpdate" "curl" "zip" "linux-headers-$(uname -r)" "unrar-free" "p7zip-full" "unzip" "macchanger" "irssi" "terminator" "fonts-inconsolata")
    apt-get update -y
    for pkg in "${listpkg[@]}"; do
       is_installed=$(dpkg-query -W -f='${Status}\n' "$pkg" | head -n1 | awk '{print $3;}')
