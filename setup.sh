@@ -65,7 +65,8 @@ DefaultFiles(){
            echo -e "${MAGENTA}[DOWNLOAD]${GREEN} The file $key has been correctly replaced ${END} \n" 1>&2
        fi
    done
-   source ~/.bashrc
+   #destroy current bash instence and create a new one to apply the bashrc conf
+   exec bash
     echo -e "${GREEN} Which Distribution list do you want to use for your sources.list ${END}: \n"
    read -p " ${GREEN} ct(contrib) | stable(default) | nf(non-free ) | cnf(contrib non-free): ${END}" choice
    case "$choice" in 
