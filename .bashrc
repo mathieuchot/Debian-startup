@@ -6,6 +6,7 @@ eval "`dircolors`"
 alias ls='ls $LS_OPTIONS'
 alias ll='ls $LS_OPTIONS -lahg'
 alias l='ls $LS_OPTIONS -lart'
+alias lsd='ls $LS_OPTIONS -lartd'
 
 alias cp='cp -i'
 alias mv='mv -i'
