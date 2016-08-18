@@ -93,10 +93,10 @@ DefaultFiles(){
      router) wget -q $fw_router -O /etc/init.d/firewall.sh ;;
      * ) echo "${RED} Please choose one of the following options${GREEN} vps | perso | server | router : ${END}" ;;
    esac
-   if [[ $? -ne 0 ]]; then
+   if [[ $? -eq 0 ]]; then
       chmod +x /etc/init.d/firewall.sh 
       update-rc.d firewall.sh defaults
-      if [[ $? -ne 0 ]]; then
+      if [[ $? -eq 0 ]]; then
          read -p " ${GREEN} Do you want to start the firewall now ? ${END}" choice
             case "$choice" in 
                Y|y) echo -e " ${GREEN}Starting the firewall...${END}" 
