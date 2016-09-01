@@ -54,6 +54,8 @@ esac
 #all logs
 logs="find /var/log -type f -exec file {} \; | grep 'text' | cut -d' ' -f1 | sed -e's/:$//g' | grep -v '[0-9]$' | xargs tail -f"
 
+wifipass="egrep -h -s -A 9 --color -T 'ssid=' /etc/NetworkManager/system-connections/*"
+
 ### functions ###
 ext () {
   if [ -z "$1" ]; then
