@@ -48,7 +48,7 @@ alias freecache='free && sync && echo 3 > /proc/sys/vm/drop_caches && free'
 alias logs="find /var/log -type f -exec file {} \; | grep 'text' | cut -d' ' -f1 | sed -e's/:$//g' | grep -vE '[0-9]$' | xargs tail -f"
 
 alias wifipass="egrep -h -s -A 9 --color -T 'ssid=' /etc/NetworkManager/system-connections/*"
-
+alias internet="ip route | grep default | cut -d ' ' -f 5"
 alias scrot='scrot -s /home/mathieu/Images/scrot_%b%d::%H%M%S.png'
 
 #man bash colored
