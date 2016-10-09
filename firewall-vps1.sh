@@ -15,7 +15,7 @@ set -e
 # Init
 INTERNET=$(ip route | grep default | cut -d " " -f 5)
 # /usr/local/bin/oc-metadata | grep VOLUMES_0_EXPORT_URI | awk -F "/|:" '{print $4}'
-REMOTEHD=$(/usr/local/bin/oc-metadata | grep VOLUMES_0_EXPORT_URI | cut -d ":" -f "2" | cut -d "/" -f "3")
+DISKTYPE=$(/usr/local/bin/oc-metadata | grep VOLUMES_0_EXPORT_URI | cut -d "=" -f "2" | cut -d ":" -f "1") #device or ndb
 
 echo $REMOTEHD
 echo $INTERNET
@@ -26,9 +26,11 @@ enable_iptable() {
 	#---------------INPUT---------------#
 	iptables -A INPUT -p tcp ! --dport ssh -j LOG  --log-prefix "INPUT" 
 	iptables -A INPUT -i lo -j ACCEPT
-	#allow connection to the SSD on the network 
-	iptables -A INPUT -i $INTERNET -s $REMOTEHD -j ACCEPT
-	
+	#allow connection to the SSD on the network (if nbd) 
+	if [[ $DISKTYPE -eq "nbd" ]]; then
+ 	    REMOTEHD=$(/usr/local/bin/oc-metadata | grep VOLUMES_0_EXPORT_URI | cut -d ":" -f "2" | cut -d "/" -f "3")
+	    iptables -A INPUT -i $INTERNET -s $REMOTEHD -j ACCEPT
+	fi
 	iptables -A INPUT -i $INTERNET -p udp --dport 53 -j ACCEPT
 	iptables -A INPUT -i $INTERNET -p tcp -m multiport --dports 80,22,443,43900,8000,2368 -j ACCEPT
 	iptables -A INPUT -m conntrack --ctstate NEW,RELATED,ESTABLISHED -j ACCEPT
