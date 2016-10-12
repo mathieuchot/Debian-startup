@@ -32,9 +32,11 @@ alias df='df -h --total'
 export LS_OPTIONS='--color=auto'
 eval "`dircolors`"
 alias ls='ls $LS_OPTIONS'
-alias ll='ls $LS_OPTIONS -lahg'
-alias l='ls $LS_OPTIONS -lart'
+alias l='ls $LS_OPTIONS -lahghrt'
+alias ll='ls $LS_OPTIONS -laghn'
+alias lt='ls $LS_OPTIONS -laghS'
 alias lsd='ls $LS_OPTIONS -lartd */'
+
 alias catc='pygmentize -g'
 alias cp='cp -i'
 alias mv='mv -i'
@@ -50,6 +52,7 @@ alias logs="find /var/log -type f -exec file {} \; | grep 'text' | cut -d' ' -f1
 alias wifipass="egrep -h -s -A 9 --color -T 'ssid=' /etc/NetworkManager/system-connections/*"
 alias internet="ip route | grep default | cut -d ' ' -f 5"
 alias scrot='scrot -s /home/mathieu/Images/scrot_%b%d::%H%M%S.png'
+alias gitup='find . -type d -name .git -exec sh -c "cd \"{}\"/../ && pwd && git pull" \;'
 
 #man bash colored
 export LESS_TERMCAP_mb=$'\E[01;31m'
@@ -88,11 +91,12 @@ ext () {
 }
 
 nmac(){
-  INTERFACE=$(ip route | grep default | cut -d " " -f 5)
-  sudo ifdown $INTERFACE
-  sudo macchanger -A $INTERFACE
-  sudo service networking restart
-
+  INTERFACES=$(ip route | grep default | awk -F "dev " '{print $2}' | cut -d ' ' -f 1)
+  for i in $INTERFACES; do
+      sudo ifdown $i
+      sudo macchanger -A $i
+      sudo ifup $i  
+  done
 }
 
 upbashrc(){
@@ -149,10 +153,8 @@ web(){
 	/etc/init.d/firewall.sh restart
 }
 addusb(){
+	echo "\nPlug your usb device..."
+	udevadm monitor
 	sudo echo '\nACTION=="add", ATTR{idVendor}=="$1" RUN+="/bin/sh -c 'echo 1 >/sys$DEVPATH/authorized'"' >> /etc/udev/rules.d/01-usblockdown.rules
 }
-
-
-
-
 
