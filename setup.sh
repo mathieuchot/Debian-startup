@@ -53,6 +53,12 @@ EOF
    apt-get update -y
 }
 
+Sourcelistsid(){
+cat <<EOF > /etc/apt/sources.list
+deb http://ftp.fr.debian.org/debian/ sid main
+deb-src http://ftp.fr.debian.org/debian/ sid main
+EOF
+}
 
 DefaultFiles(){
    echo -e "${BLUE}[1/5]${GREEN} Replacing Default files  \n ${END}" 1>&2
@@ -79,10 +85,7 @@ DefaultFiles(){
      cnf) echo -e "${GREEN} The testing & unstable distribution will be used${END} \n" 1>&2
             Sourcelists "contrib non-free" ;;
      sid) echo -e "${GREEN} The testing & unstable distribution will be used${END} \n" 1>&2
-            cat <<EOF > /etc/apt/sources.list
-            deb http://ftp.fr.debian.org/debian/ sid main
-            deb-src http://ftp.fr.debian.org/debian/ sid main
-            EOF
+            Sourcelistsid
             apt update;;
      * ) echo -e "${GREEN} The stable distribution will be used${END} \n" 1>&2 
             Sourcelists;;
