@@ -83,7 +83,7 @@ DefaultFiles(){
             deb http://ftp.fr.debian.org/debian/ sid main
             deb-src http://ftp.fr.debian.org/debian/ sid main
             EOF
-            apt update
+            apt update;;
      * ) echo -e "${GREEN} The stable distribution will be used${END} \n" 1>&2 
             Sourcelists;;
    esac
