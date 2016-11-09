@@ -49,8 +49,6 @@ deb-src http://httpredir.debian.org/debian jessie-updates main $option
 deb http://security.debian.org/ jessie/updates main $option
 deb-src http://security.debian.org/ jessie/updates main $option
 
-deb http://ftp.fr.debian.org/debian/ $option main
-deb-src http://ftp.fr.debian.org/debian/ $option main
 EOF
    apt-get update -y
 }
@@ -81,7 +79,11 @@ DefaultFiles(){
      cnf) echo -e "${GREEN} The testing & unstable distribution will be used${END} \n" 1>&2
             Sourcelists "contrib non-free" ;;
      sid) echo -e "${GREEN} The testing & unstable distribution will be used${END} \n" 1>&2
-            Sourcelists "sid" ;;
+            cat <<EOF > /etc/apt/sources.list
+            deb http://ftp.fr.debian.org/debian/ sid main
+            deb-src http://ftp.fr.debian.org/debian/ sid main
+            EOF
+            apt update
      * ) echo -e "${GREEN} The stable distribution will be used${END} \n" 1>&2 
             Sourcelists;;
    esac
