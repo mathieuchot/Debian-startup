@@ -67,7 +67,7 @@ DefaultFiles(){
        fi
    done
    #destroy current bash instence and create a new one to apply the bashrc conf
-   exec bash
+   #exec bash
     echo -e "${GREEN} Which Distribution list do you want to use for your sources.list ${END}: \n"
    read -p " ${GREEN} ct(contrib) | stable(default) | nf(non-free ) | cnf(contrib non-free): ${END}" choice
    case "$choice" in 
