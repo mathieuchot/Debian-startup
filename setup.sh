@@ -1,7 +1,7 @@
 #!/bin/bash
 #author: mathieu chot-plassot
 HOST='https://github.com'
-CHECK_INTERNET=$(wget --spider -nv -S $HOST 2>&1 | grep -m 1 'HTTP/' | cut -d" " -f4)
+CHECK_INTERNET=$(wget --no-check-certificate --spider -nv -S $HOST 2>&1 | grep -m 1 'HTTP/' | cut -d" " -f4)
 
 GREEN="$(tput setaf 2)"
 MAGENTA="$(tput setaf 5)"
@@ -77,6 +77,8 @@ DefaultFiles(){
             Sourcelists "non-free" ;;
      cnf) echo -e "${GREEN} The testing & unstable distribution will be used${END} \n" 1>&2
             Sourcelists "contrib non-free" ;;
+     sid) echo -e "${GREEN} The testing & unstable distribution will be used${END} \n" 1>&2
+            Sourcelists "sid" ;;
      * ) echo -e "${GREEN} The stable distribution will be used${END} \n" 1>&2 
             Sourcelists;;
    esac
