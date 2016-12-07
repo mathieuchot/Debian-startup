@@ -5,6 +5,6 @@ Usage:
 
 1]   wget https://raw.githubusercontent.com/mathieuchot/Debian-startup/master/setup.sh
 
-2]   chmod +x setup.sh
+2]   chmod u+x setup.sh
 
 3]   ./setup.sh
