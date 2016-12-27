@@ -139,6 +139,7 @@ Pkginstall(){
             echo -e "${MAGENTA}[PKG]${GREEN} $pkg is now installed ! ${END} \n" 1>&2
          fi
       fi
+   #echo "$USER  ALL=(ALL:ALL) ALL" >> /etc/sudoers
    done
 }
 
@@ -160,7 +161,7 @@ Upgrade(){
 }
 
 if [ -z "$1" ]; then
-    echo "Usage:  ${0##*/} [-getfiles] [-upgrade] [-pkginstall] [] [ALL]${END}"
+    echo "Usage:  ${0##*/} [-getfiles] [-upgrade] [-pkginstall] [] [ALL] ${END}"
 else
    case "$1" in
       -pkginstall) Pkginstall;;
