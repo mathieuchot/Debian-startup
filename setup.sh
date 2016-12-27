@@ -160,7 +160,7 @@ Upgrade(){
 }
 
 if [ -z "$1" ]; then
-    echo "Usage:  ${0##*/} [-getfiles] [-upgrade] [-pkginstall] [] [ALL]"
+    echo "Usage:  ${0##*/} [-getfiles] [-upgrade] [-pkginstall] [] [ALL]${END}"
 else
    case "$1" in
       -pkginstall) Pkginstall;;
