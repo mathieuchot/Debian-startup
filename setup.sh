@@ -141,14 +141,15 @@ Pkginstall(){
       fi
    read -p " ${GREEN}Do you want to add a user to the sudoers file (y/n)?${END}" choice
       case "$choice" in 
-         y|Y )  echo "\n${GREEN}List of users: ${END}\n"
+         y|Y )  echo " \n ${GREEN}List of users: ${END} \n "
             cut -d: -f1 /etc/passwd
-            read -p "\n\n${GREEN}username: ${END}" sudouser
+            read -p " \n \n ${GREEN}username: ${END}" sudouser
             echo "$sudouser  ALL=(ALL:ALL) ALL" >> /etc/sudoers
             if [ $? -ne 0 ]; then
                echo -e "${MAGENTA}[UPGRADE]${RED} An error has been encountered. Error code: $? ${END} \n" 1>&2
             fi
             ;;
+         *) ;;
       esac
    #echo "$USER  ALL=(ALL:ALL) ALL" >> /etc/sudoers
    done
