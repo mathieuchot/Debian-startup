@@ -1,0 +1,17 @@
+Kernal 4.9 debian upgrade:
+
+apt install git fakeroot build-essential ncurses-dev xz-utils libssl-dev bc kernel-package
+wget https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.9.tar.sign
+wget https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.9.tar.xz
+gpg --keyserver hkp://keys.gnupg.net --recv-keys 00411886
+gpg --verify linux-4.9.tar.sign
+tar xvf linux-4.9.tar
+cd linux-4.9
+cp /boot/config-$(uname -r) .config
+make menuconfig
+make-kpkg clean
+fakeroot make-kpkg --initrd --revision=1.0.NAS kernel_image kernel_headers
+dpkg -i ../linux-headers-4.9.0_1.0.NAS_amd64.deb
+dpkg -i ../linux-image-4.9.0_1.0.NAS_amd64.deb
+reboot
+uname -a
