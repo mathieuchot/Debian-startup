@@ -1,6 +1,6 @@
 __Prerequesites__
 
-Add "set FSCKFIX=yes" to /etc/default/rcS :
+Add FSCKFIX=yes to /etc/default/rcS :
 
 Remove shadow and gshadow from the cron backup:
 Edit /etc/cron.daily/passwd:
