@@ -1,0 +1,9 @@
+sudo apt install policykit-1 libsss-sudo ntp adcli sssd realmd sssd-tools sssd libnss-sss libpam-sss adcli packagekit
+sudo mkdir -p /var/lib/samba/private
+sudo systemctl enable sssd
+realm discover mydomain.com
+sudo realm join --user=mathieuchot mydomain.com
+sudo systemctl start sssd
+sudo getent passwd mathieuchot@mydomain.com
+#add domain admins to local admins 
+#echo "%domain\ admins@mydomain.com ALL=(ALL) ALL" | sudo tee -a /etc/sudoers.d/domain_admins
