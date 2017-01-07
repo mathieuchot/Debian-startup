@@ -139,6 +139,7 @@ Pkginstall(){
             echo -e "${MAGENTA}[PKG]${GREEN} $pkg is now installed ! ${END} \n" 1>&2
          fi
       fi
+   done
    read -p " ${GREEN}Do you want to add a user to the sudoers file (y/n)?${END}" choice
       case "$choice" in 
          y|Y )  echo -e " \n ${GREEN}List of users: ${END} \n "
@@ -153,7 +154,6 @@ Pkginstall(){
          *) exit;;
       esac
    #echo "$USER  ALL=(ALL:ALL) ALL" >> /etc/sudoers
-   done
 }
 
 
