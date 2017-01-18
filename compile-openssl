@@ -1,0 +1,14 @@
+# If openssl deb package is installed, uninstall it first without all the dep
+dpkg -P --force-depends openssl
+# install the last openssl version
+cd /opt/
+git clone https://github.com/openssl/openssl.git
+# prefix=/usr/ to replace existing deb package and enable some broken ciphers to be compliant with HIPAA
+cd openssl
+./config --prefix=/usr/ enable-weak-ssl-ciphers
+make
+make install
+#if you got an error like this: 
+/usr/bin/openssl: /usr/lib/x86_64-linux-gnu/libcrypto.so.1.1: version `OPENSSL_1_1_1' not found (required by /usr/bin/openssl) 
+replace the file:
+mv /usr/lib/x86_64-linux-gnu/libcrypto.so.1.1 /usr/lib/x86_64-linux-gnu/libcrypto.so.1.1.bak
