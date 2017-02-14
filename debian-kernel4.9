@@ -5,9 +5,9 @@ apt install git fakeroot build-essential ncurses-dev xz-utils libssl-dev bc kern
 wget https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.9.9.tar.sign
 wget https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.9.9.tar.xz
 
-
-gpg --keyserver hkp://keys.gnupg.net --recv-keys XXXXXXXX #rsa key id 
 gpg --verify linux-4.9.9.tar.sign #give a  RSA key ID
+gpg --keyserver hkp://keys.gnupg.net --recv-keys XXXXXXXX #rsa key id 
+
 
 tar xvf linux-4.9.9.tar
 cd linux-4.9.9
